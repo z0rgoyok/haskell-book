@@ -1,0 +1,40 @@
+{
+    "name": "haskell-for-mobile-devs",
+    "version": "1.0.0",
+    "description": "Интерактивное приложение для изучения Haskell мобильными разработчиками",
+    "main": "index.html",
+    "scripts": {
+        "start": "http-server -p 8000 -o",
+        "dev": "http-server -p 8000 -o --cors",
+        "build": "echo 'Статический сайт не требует сборки'",
+        "deploy": "gh-pages -d ."
+    },
+    "keywords": [
+        "haskell",
+        "mobile",
+        "learning",
+        "education",
+        "functional-programming",
+        "javascript",
+        "web-app"
+    ],
+    "author": "Denis Zabozhanov",
+    "license": "MIT",
+    "devDependencies": {
+        "http-server": "^14.1.1",
+        "gh-pages": "^6.0.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/username/haskell-for-mobile-devs.git"
+    },
+    "bugs": {
+        "url": "https://github.com/username/haskell-for-mobile-devs/issues"
+    },
+    "homepage": "https://github.com/username/haskell-for-mobile-devs#readme",
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not dead"
+    ]
+}
