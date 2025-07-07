@@ -54,8 +54,6 @@ cd backend
 
 # Установка Haskell (если еще не установлен)
 curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
-ghcup install ghc 9.4.7
-ghcup install cabal 3.8.1.0
 
 # Сборка и запуск
 cabal update
