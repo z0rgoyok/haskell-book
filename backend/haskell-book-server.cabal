@@ -1,0 +1,35 @@
+cabal-version: 2.4
+name: haskell-book-server
+version: 0.1.0.0
+synopsis: Web server for Haskell learning book
+description: 
+    A progressive web server built step by step in the Haskell learning book.
+    Demonstrates practical Haskell concepts through real web development.
+homepage: https://github.com/your-username/haskell-book
+license: BSD-3-Clause
+author: Haskell Book Team
+maintainer: your-email@example.com
+category: Education, Web
+build-type: Simple
+
+executable haskell-book-server
+    main-is: Main.hs
+    other-modules:
+        Api.Types,
+        Api.Handlers,
+        Data.Chapter,
+        Data.User,
+        Utils.Json
+    build-depends: 
+        base >=4.7 && <5,
+        scotty >=0.12,
+        aeson >=2.0,
+        text >=1.2,
+        bytestring >=0.10,
+        wai >=3.2,
+        wai-cors >=0.2,
+        sqlite-simple >=0.4,
+        time >=1.9
+    hs-source-dirs: src
+    default-language: Haskell2010
+    ghc-options: -Wall -Wcompat 

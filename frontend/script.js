@@ -159,81 +159,354 @@ loadUsers = do
         `
     },
     ch1: {
-        title: "1. Hello, Haskell",
+        title: "1. Hello, Web Server",
         content: `
-            <h1>1. Hello, Haskell</h1>
+            <h1>1. Hello, Web Server</h1>
+            <p>🎯 <strong>Цель:</strong> Создать самый простой веб-сервер на Haskell</p>
+            
+            <h2>🚀 Что мы будем строить</h2>
+            <p>В этом курсе мы пошагово создадим веб-сервер для нашей книги по Haskell. Каждая глава добавит новую функциональность:</p>
+            
+            <div class="roadmap-step">
+                <span class="step-number">📚</span>
+                <div class="step-content">
+                    <h4>Финальный результат</h4>
+                    <p>Полноценный веб-сервер с API для управления главами, прогрессом и пользователями</p>
+                </div>
+            </div>
+
+            <h2>🔧 Установка окружения</h2>
+            <p>Для работы нам понадобится:</p>
             <ul>
-                <li>Установка GHC и GHCi</li>
-                <li><code>main = putStrLn "Hello, World!"</code></li>
-                <li>ghci как REPL</li>
+                <li><strong>GHC</strong> - компилятор Haskell</li>
+                <li><strong>Cabal</strong> - менеджер пакетов</li>
+                <li><strong>Stack</strong> - инструмент для проектов</li>
             </ul>
-            <h2>Установка</h2>
-            <p>Для начала работы с Haskell нужно установить GHC (Glasgow Haskell Compiler) и GHCi (интерактивную оболочку).</p>
-            <pre><code class="language-haskell">-- Простейшая программа на Haskell
+
+            <h3>Установка через GHCup</h3>
+            <pre><code class="language-bash"># Установка GHCup (менеджер версий Haskell)
+curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+
+# Перезапуск терминала, затем:
+ghcup install ghc 9.4.7
+ghcup install cabal 3.8.1.0
+ghcup install stack 2.11.1</code></pre>
+
+            <h2>🎯 Наша первая программа</h2>
+            <p>Создадим простейший веб-сервер, который отвечает "Hello, World!":</p>
+            
+            <pre><code class="language-haskell">-- Main.hs
+{-# LANGUAGE OverloadedStrings #-}
+import Network.HTTP.Simple
+
 main :: IO ()
-main = putStrLn "Hello, World!"</code></pre>
+main = do
+    putStrLn "🚀 Запускаем веб-сервер..."
+    putStrLn "Сервер доступен на http://localhost:8080"
+    -- Пока что просто выводим сообщение
+    putStrLn "Hello, Web Server!"</code></pre>
+
+            <h2>🏗️ Структура проекта</h2>
+            <p>Создадим структуру для нашего веб-сервера:</p>
+            
+            <pre><code class="language-bash">mkdir haskell-book-server
+cd haskell-book-server
+cabal init --simple
+</code></pre>
+
+            <div class="pro-tip">
+                <h4>💡 Что дальше?</h4>
+                <p>В следующей главе мы изучим функции и типы, которые понадобятся для создания API endpoints. Каждый endpoint будет функцией, которая принимает запрос и возвращает ответ!</p>
+            </div>
+
+            <h2>🎪 Попробуйте сами</h2>
+            <p>Компилируем и запускаем:</p>
+            <pre><code class="language-bash">ghc Main.hs
+./Main</code></pre>
         `
     },
     ch2: {
-        title: "2. Типы данных",
+        title: "2. Функции для API",
         content: `
-            <h1>2. Типы данных</h1>
+            <h1>2. Функции для API</h1>
+            <p>🎯 <strong>Цель:</strong> Изучить функции и типы для создания API endpoints</p>
+            
+            <h2>🔧 Функции как строительные блоки</h2>
+            <p>Каждый API endpoint - это функция, которая:</p>
             <ul>
-                <li>Int, Float, Bool, Char, String</li>
-                <li>List: [Int], head, tail, map, filter</li>
-                <li>Tuple: (Int, String)</li>
+                <li>Принимает HTTP запрос</li>
+                <li>Обрабатывает данные</li>
+                <li>Возвращает HTTP ответ</li>
             </ul>
-            <h2>Основные типы</h2>
-            <pre><code class="language-haskell">-- Числа
-age :: Int
-age = 25
 
-price :: Float
-price = 19.99
+            <h3>Основные типы для веб-сервера</h3>
+            <pre><code class="language-haskell">-- Типы для веб-приложения
+type UserId = Int
+type ChapterId = String
+type Title = String
+type Content = String
 
--- Булевы значения
-isReady :: Bool
-isReady = True
+-- Функция для получения главы
+getChapter :: ChapterId -> IO (Maybe Content)
+getChapter chapterId = do
+    -- Пока что возвращаем заглушку
+    return $ Just "Содержимое главы"
 
--- Символы и строки
-initial :: Char
-initial = 'D'
+-- Функция для API endpoint
+handleChapterRequest :: ChapterId -> IO String
+handleChapterRequest chapterId = do
+    maybeContent <- getChapter chapterId
+    case maybeContent of
+        Just content -> return content
+        Nothing -> return "Глава не найдена"</code></pre>
 
-name :: String
-name = "Denis"</code></pre>
-            <h2>Списки</h2>
-            <pre><code class="language-haskell">-- Список чисел
-numbers :: [Int]
-numbers = [1, 2, 3, 4, 5]
+            <h2>🎨 Объявление функций</h2>
+            <p>В Haskell функции объявляются очень просто:</p>
+            
+            <pre><code class="language-haskell">-- Тип функции указывается отдельно
+greetUser :: String -> String
+greetUser name = "Привет, " ++ name ++ "!"
 
--- Операции со списками
-firstNumber = head numbers  -- 1
-restNumbers = tail numbers  -- [2, 3, 4, 5]</code></pre>
+-- Функция для API приветствия
+apiGreeting :: String -> IO String
+apiGreeting name = do
+    let message = greetUser name
+    putStrLn ("Обрабатываем запрос для: " ++ name)
+    return message</code></pre>
+
+            <h2>🔄 Функции с несколькими параметрами</h2>
+            <p>Функции в Haskell каррированы - это означает, что можно применять их частично:</p>
+            
+            <pre><code class="language-haskell">-- Функция для создания ответа API
+createResponse :: Int -> String -> String -> String
+createResponse statusCode message body = 
+    "Status: " ++ show statusCode ++ 
+    ", Message: " ++ message ++ 
+    ", Body: " ++ body
+
+-- Частичное применение для создания готовых функций
+successResponse :: String -> String -> String
+successResponse = createResponse 200
+
+errorResponse :: String -> String -> String
+errorResponse = createResponse 400
+
+-- Использование
+userCreated = successResponse "User created" "{'id': 123}"
+invalidData = errorResponse "Invalid data" "{'error': 'missing name'}"</code></pre>
+
+            <h2>🧩 Композиция функций</h2>
+            <p>Функции можно комбинировать для создания более сложных операций:</p>
+            
+            <pre><code class="language-haskell">-- Функции для обработки данных
+validateUser :: String -> Bool
+validateUser name = length name > 0
+
+formatResponse :: String -> String
+formatResponse content = "{'data': '" ++ content ++ "'}"
+
+-- Композиция функций
+processUserData :: String -> String
+processUserData name = 
+    if validateUser name 
+    then formatResponse name
+    else "{'error': 'Invalid user name'}"
+
+-- Используя оператор композиции (.)
+upperCaseResponse :: String -> String
+upperCaseResponse = formatResponse . map toUpper</code></pre>
+
+            <div class="application-examples">
+                <div class="example-card">
+                    <h4>🌐 Мобильная аналогия</h4>
+                    <p>Функции в Haskell похожи на <strong>чистые функции в Redux</strong> - они принимают данные, обрабатывают их и возвращают результат без побочных эффектов.</p>
+                </div>
+            </div>
+
+            <h2>🏗️ Строим первый endpoint</h2>
+            <p>Создадим простую функцию для обработки запроса к API:</p>
+            
+            <pre><code class="language-haskell">-- Тип для HTTP метода
+data HttpMethod = GET | POST | PUT | DELETE deriving (Show, Eq)
+
+-- Тип для запроса
+data Request = Request 
+    { method :: HttpMethod
+    , path :: String
+    , body :: String
+    } deriving (Show)
+
+-- Функция для маршрутизации
+routeRequest :: Request -> IO String
+routeRequest req = case (method req, path req) of
+    (GET, "/") -> return "Welcome to Haskell Book API!"
+    (GET, "/chapters") -> return "List of chapters"
+    (GET, path) -> if "/chapter/" \`isPrefixOf\` path
+        then return "Chapter content"
+        else return "404 Not Found"
+    _ -> return "Method not allowed"
+
+            <div class="pro-tip">
+                <h4>💡 Что дальше?</h4>
+                <p>В следующей главе мы изучим списки и JSON данные. Научимся работать с коллекциями данных, которые приходят в HTTP запросах!</p>
+            </div>
+
+            <h2>🎪 Попробуйте сами</h2>
+            <pre><code class="language-haskell">-- Создайте функцию для обработки пользователей
+handleUser :: String -> String -> String
+handleUser action username = 
+    "Action: " ++ action ++ ", User: " ++ username
+
+-- Попробуйте:
+-- handleUser "create" "john"
+-- handleUser "delete" "jane"</code></pre>
         `
     },
     ch3: {
-        title: "3. Функции",
+        title: "3. Списки и JSON данные",
         content: `
-            <h1>3. Функции</h1>
+            <h1>3. Списки и JSON данные</h1>
+            <p>🎯 <strong>Цель:</strong> Научиться работать с коллекциями данных для API</p>
+            
+            <h2>📋 Списки - основа данных API</h2>
+            <p>В веб-API мы постоянно работаем с коллекциями:</p>
             <ul>
-                <li>Объявление функций</li>
-                <li>Паттерн-матчинг</li>
-                <li>Рекурсия vs циклы (аналог for, while)</li>
-                <li>Частичное применение, каррирование</li>
+                <li>Список пользователей</li>
+                <li>Список глав книги</li>
+                <li>Список прогресса обучения</li>
             </ul>
-            <h2>Объявление функций</h2>
-            <pre><code class="language-haskell">-- Простая функция
-double :: Int -> Int
-double x = x * 2
 
--- Функция с несколькими параметрами
-add :: Int -> Int -> Int
-add x y = x + y</code></pre>
-            <h2>Рекурсия</h2>
-            <pre><code class="language-haskell">-- Факториал
-factorial :: Int -> Int
-factorial 0 = 1
-factorial n = n * factorial (n - 1)</code></pre>
+            <h3>Работа со списками</h3>
+            <pre><code class="language-haskell">-- Список глав
+chapters :: [String]
+chapters = ["intro", "ch1", "ch2", "ch3"]
+
+-- Список пользователей
+users :: [String]
+users = ["alice", "bob", "charlie"]
+
+-- Основные операции со списками
+firstChapter = head chapters     -- "intro"
+restChapters = tail chapters     -- ["ch1", "ch2", "ch3"]
+chapterCount = length chapters   -- 4
+isEmpty = null chapters          -- False</code></pre>
+
+            <h2>🔄 Функции высшего порядка</h2>
+            <p>Эти функции - основа для обработки API данных:</p>
+            
+            <pre><code class="language-haskell">-- map - преобразует каждый элемент (как в JS/Kotlin)
+chapterTitles = map ("Chapter " ++) chapters
+-- ["Chapter intro", "Chapter ch1", "Chapter ch2", "Chapter ch3"]
+
+-- filter - фильтрует элементы
+completedChapters = filter (\\ch -> length ch > 3) chapters
+-- ["intro"]
+
+-- Поиск элемента
+findChapter :: String -> [String] -> Maybe String
+findChapter target list = find (== target) list</code></pre>
+
+            <h2>🏗️ Моделирование данных для API</h2>
+            <p>Создадим типы данных для нашего API:</p>
+            
+            <pre><code class="language-haskell">-- Тип для главы
+data Chapter = Chapter
+    { chapterId :: String
+    , chapterTitle :: String
+    , chapterContent :: String
+    , chapterCompleted :: Bool
+    } deriving (Show)
+
+-- Тип для пользователя
+data User = User
+    { userId :: Int
+    , userName :: String
+    , userProgress :: [String]  -- список изученных глав
+    } deriving (Show)
+
+-- Создаем данные
+sampleChapters :: [Chapter]
+sampleChapters = 
+    [ Chapter "intro" "Введение" "Содержание введения" False
+    , Chapter "ch1" "Hello World" "Первая программа" True
+    , Chapter "ch2" "Функции" "Изучаем функции" False
+    ]
+
+sampleUsers :: [User]
+sampleUsers = 
+    [ User 1 "alice" ["intro", "ch1"]
+    , User 2 "bob" ["intro"]
+    ]</code></pre>
+
+            <h2>🎨 API функции для работы с данными</h2>
+            <p>Создадим функции для обработки запросов к API:</p>
+            
+            <pre><code class="language-haskell">-- Получить все главы
+getAllChapters :: [Chapter] -> [Chapter]
+getAllChapters = id  -- просто возвращаем все главы
+
+-- Получить главу по ID
+getChapterById :: String -> [Chapter] -> Maybe Chapter
+getChapterById targetId chapters = 
+    find (\\ch -> chapterId ch == targetId) chapters
+
+-- Получить завершенные главы
+getCompletedChapters :: [Chapter] -> [Chapter]
+getCompletedChapters = filter chapterCompleted
+
+-- Получить пользователя по ID
+getUserById :: Int -> [User] -> Maybe User
+getUserById targetId users = 
+    find (\\u -> userId u == targetId) users
+
+-- Получить прогресс пользователя
+getUserProgress :: Int -> [User] -> [String]
+getUserProgress targetId users = 
+    case getUserById targetId users of
+        Just user -> userProgress user
+        Nothing -> []</code></pre>
+
+            <div class="application-examples">
+                <div class="example-card">
+                    <h4>📱 Мобильная аналогия</h4>
+                    <p>Функции map, filter, find в Haskell работают точно так же, как в <strong>Kotlin/Swift collections</strong>. Разница в том, что они чистые и иммутабельные!</p>
+                </div>
+            </div>
+
+            <h2>🔗 Комбинирование операций</h2>
+            <p>Объединяем функции для создания сложной логики:</p>
+            
+            <pre><code class="language-haskell">-- Получить названия незавершенных глав
+getIncompleteChapterTitles :: [Chapter] -> [String]
+getIncompleteChapterTitles chapters = 
+    map chapterTitle $           -- извлекаем названия
+    filter (not . chapterCompleted) $  -- берем незавершенные
+    chapters
+
+-- Получить статистику пользователя
+getUserStats :: Int -> [User] -> [Chapter] -> String
+getUserStats targetId users chapters = 
+    let userChapters = getUserProgress targetId users
+        totalChapters = length chapters
+        completedCount = length userChapters
+    in "Пользователь прошел " ++ show completedCount ++ 
+       " из " ++ show totalChapters ++ " глав"</code></pre>
+
+            <h2>🎪 Попробуйте сами</h2>
+            <p>Поэкспериментируйте с функциями:</p>
+            
+            <pre><code class="language-haskell">-- Попробуйте эти выражения:
+map (*2) [1, 2, 3, 4]
+filter even [1, 2, 3, 4, 5, 6]
+length [1, 2, 3]
+head [1, 2, 3]
+tail [1, 2, 3]
+[1, 2] ++ [3, 4]</code></pre>
+
+            <div class="pro-tip">
+                <h4>💡 Что дальше?</h4>
+                <p>В следующей главе мы изучим IO и монады. Научимся делать настоящие HTTP запросы и сохранять данные в файлы!</p>
+            </div>
         `
     },
     ch4: {
@@ -298,26 +571,173 @@ moreNumbers = 0 : numbers  -- [0, 1, 2, 3]
         `
     },
     ch7: {
-        title: "7. Функции высшего порядка",
+        title: "7. Первый веб-сервер",
         content: `
-            <h1>7. Функции высшего порядка</h1>
+            <h1>7. Первый веб-сервер</h1>
+            <p>🎯 <strong>Цель:</strong> Создать настоящий HTTP сервер на Haskell</p>
+            
+            <h2>🚀 Момент истины!</h2>
+            <p>Пора создать настоящий веб-сервер! Мы будем использовать библиотеку <strong>Scotty</strong> - простой и понятный веб-фреймворк для Haskell.</p>
+
+            <h3>Настройка проекта</h3>
+            <p>Создадим cabal проект и добавим зависимости:</p>
+            
+            <pre><code class="language-bash"># Создаем проект
+mkdir haskell-book-server
+cd haskell-book-server
+cabal init --simple</code></pre>
+
+            <h3>Файл cabal конфигурации</h3>
+            <pre><code class="language-cabal">name: haskell-book-server
+version: 0.1.0.0
+build-type: Simple
+
+executable haskell-book-server
+    main-is: Main.hs
+    build-depends: 
+        base >=4.7 && <5,
+        scotty,
+        text,
+        aeson,
+        wai-cors
+    default-language: Haskell2010</code></pre>
+
+            <h2>📡 Создаем сервер</h2>
+            <p>Наш первый веб-сервер с API для книги:</p>
+            
+            <pre><code class="language-haskell">{-# LANGUAGE OverloadedStrings #-}
+module Main where
+
+import Web.Scotty
+import Data.Text.Lazy (Text)
+import qualified Data.Text.Lazy as T
+import Network.Wai.Middleware.Cors
+
+-- Главная функция
+main :: IO ()
+main = do
+    putStrLn "🚀 Запускаем Haskell Book Server..."
+    putStrLn "Сервер доступен на: http://localhost:8080"
+    scotty 8080 $ do
+        -- Включаем CORS для фронтенда
+        middleware $ cors $ const $ Just simpleCorsResourcePolicy
+        
+        -- Главная страница
+        get "/" $ do
+            html "Welcome to Haskell Book API!"
+        
+        -- API для получения всех глав
+        get "/api/chapters" $ do
+            json allChapters
+        
+        -- API для получения конкретной главы
+        get "/api/chapters/:id" $ do
+            chapterId <- param "id"
+            case findChapter chapterId allChapters of
+                Just chapter -> json chapter
+                Nothing -> do
+                    status notFound404
+                    json ("Chapter not found" :: Text)
+        
+        -- API для получения прогресса
+        get "/api/progress" $ do
+            json userProgress</code></pre>
+
+            <h2>🗄️ Данные для API</h2>
+            <p>Создадим структуры данных для нашего API:</p>
+            
+            <pre><code class="language-haskell">{-# LANGUAGE DeriveGeneric #-}
+import GHC.Generics
+import Data.Aeson
+
+-- Тип для главы
+data Chapter = Chapter
+    { chapterId :: String
+    , chapterTitle :: String
+    , chapterContent :: String
+    , chapterCompleted :: Bool
+    } deriving (Show, Generic)
+
+-- Автоматическая генерация JSON сериализации
+instance ToJSON Chapter
+instance FromJSON Chapter
+
+-- Тип для прогресса пользователя
+data Progress = Progress
+    { completedChapters :: [String]
+    , totalChapters :: Int
+    , progressPercentage :: Float
+    } deriving (Show, Generic)
+
+instance ToJSON Progress
+instance FromJSON Progress</code></pre>
+
+            <h2>📚 Данные глав</h2>
+            <p>Создадим список глав для нашего API:</p>
+            
+            <pre><code class="language-haskell">-- Список всех глав
+allChapters :: [Chapter]
+allChapters = 
+    [ Chapter "intro" "Введение" "Введение в Haskell" False
+    , Chapter "ch1" "Hello, Web Server" "Первый веб-сервер" True
+    , Chapter "ch2" "Функции для API" "Изучаем функции" False
+    , Chapter "ch3" "Списки и JSON" "Работа с данными" False
+    , Chapter "ch7" "Первый веб-сервер" "Создаем настоящий сервер" False
+    ]
+
+-- Поиск главы по ID
+findChapter :: String -> [Chapter] -> Maybe Chapter
+findChapter targetId chapters = 
+    find (\ch -> chapterId ch == targetId) chapters
+
+-- Прогресс пользователя (заглушка)
+userProgress :: Progress
+userProgress = Progress
+    { completedChapters = ["intro", "ch1"]
+    , totalChapters = length allChapters
+    , progressPercentage = 40.0
+    }</code></pre>
+
+            <div class="application-examples">
+                <div class="example-card">
+                    <h4>🌐 Мобильная аналогия</h4>
+                    <p>Этот веб-сервер работает как <strong>backend для мобильного приложения</strong>. API endpoints возвращают JSON данные, которые может использовать любой клиент!</p>
+                </div>
+            </div>
+
+            <h2>🎪 Запускаем сервер</h2>
+            <p>Установим зависимости и запустим:</p>
+            
+            <pre><code class="language-bash"># Устанавливаем зависимости
+cabal build
+
+# Запускаем сервер
+cabal run
+
+# Теперь можно протестировать API:
+curl http://localhost:8080/api/chapters
+curl http://localhost:8080/api/chapters/intro
+curl http://localhost:8080/api/progress</code></pre>
+
+            <h2>🔧 Тестирование API</h2>
+            <p>Наш сервер отвечает на запросы:</p>
+            
             <ul>
-                <li>map, filter, foldr и foldl</li>
-                <li>Анонимные функции (\\x -> x + 1)</li>
-                <li>Композиция функций ((.)</li>
+                <li><code>GET /</code> - Главная страница</li>
+                <li><code>GET /api/chapters</code> - Список всех глав</li>
+                <li><code>GET /api/chapters/:id</code> - Конкретная глава</li>
+                <li><code>GET /api/progress</code> - Прогресс пользователя</li>
             </ul>
-            <h2>Основные функции</h2>
-            <pre><code class="language-haskell">-- map применяет функцию к каждому элементу списка
-doubled = map (*2) [1, 2, 3, 4]  -- [2, 4, 6, 8]
 
--- filter отбирает элементы по условию
-evens = filter even [1, 2, 3, 4, 5, 6]  -- [2, 4, 6]
+            <div class="pro-tip">
+                <h4>💡 Что дальше?</h4>
+                <p>В следующей главе мы добавим маршрутизацию и создадим полноценный REST API с поддержкой POST, PUT и DELETE запросов!</p>
+            </div>
 
--- fold сворачивает список в одно значение
-sum' = foldl (+) 0 [1, 2, 3, 4]  -- 10</code></pre>
-            <h2>Анонимные функции</h2>
-            <pre><code class="language-haskell">-- Lambda-функции
-increment = map (\\x -> x + 1) [1, 2, 3]  -- [2, 3, 4]</code></pre>
+            <div class="call-to-action">
+                <h3>🎉 Поздравляем!</h3>
+                <p>Вы создали свой первый веб-сервер на Haskell! Теперь у вас есть работающий HTTP сервер, который может обслуживать API запросы.</p>
+            </div>
         `
     },
     ch8: {
@@ -355,14 +775,14 @@ data Either a b = Left a | Right b</code></pre>
                 <li>Аналогия с RxSwift, Flow, Coroutines</li>
             </ul>
             <h2>Functor</h2>
-            <pre><code>-- Functor позволяет применять функции к значениям в контексте
+            <pre><code class="language-haskell">-- Functor позволяет применять функции к значениям в контексте
 fmap :: (a -> b) -> f a -> f b
 
 -- Примеры
 fmap (+1) (Just 5)     -- Just 6
 fmap (*2) [1, 2, 3]    -- [2, 4, 6]</code></pre>
             <h2>Monad</h2>
-            <pre><code>-- Monad для работы с вычислениями в контексте
+            <pre><code class="language-haskell">-- Monad для работы с вычислениями в контексте
 return :: a -> m a
 (>>=) :: m a -> (a -> m b) -> m b</code></pre>
         `
@@ -377,7 +797,7 @@ return :: a -> m a
                 <li>Чтение и запись как эффекты</li>
             </ul>
             <h2>IO-операции</h2>
-            <pre><code>-- Чтение из консоли
+            <pre><code class="language-haskell">-- Чтение из консоли
 main :: IO ()
 main = do
     putStrLn "Как тебя зовут?"
@@ -398,7 +818,7 @@ readFileContent path = readFile path</code></pre>
                 <li>JSON-парсинг: сравнение с Gson/Moshi/Swift Codable</li>
             </ul>
             <h2>Работа с JSON</h2>
-            <pre><code>-- Пример с aeson
+            <pre><code class="language-haskell">-- Пример с aeson
 {-# LANGUAGE DeriveGeneric #-}
 import GHC.Generics
 import Data.Aeson
@@ -422,7 +842,7 @@ instance FromJSON Person</code></pre>
                 <li>Чтение/запись JSON</li>
             </ul>
             <h2>Структура приложения</h2>
-            <pre><code>-- Main.hs
+            <pre><code class="language-haskell">-- Main.hs
 module Main where
 
 import System.Environment
