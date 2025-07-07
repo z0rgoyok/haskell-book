@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -157,6 +158,41 @@
                 <article class="chapter-content" id="chapter-content">
                     <!-- Content will be loaded here -->
                 </article>
+
+                <!-- Interactive REPL Section -->
+                <section class="repl-section" id="repl-section">
+                    <div class="repl-header">
+                        <h3><i class="fas fa-terminal"></i> Интерактивный Haskell REPL</h3>
+                        <button class="repl-toggle" id="repl-toggle">
+                            <i class="fas fa-code"></i>
+                            Попробовать код
+                        </button>
+                    </div>
+                    <div class="repl-container" id="repl-container">
+                        <div class="repl-output" id="repl-output">
+                            <div class="repl-welcome">
+                                <p>🎉 Добро пожаловать в интерактивный Haskell REPL!</p>
+                                <p>Попробуйте ввести: <code>2 + 3</code> или <code>map (*2) [1,2,3]</code></p>
+                            </div>
+                        </div>
+                        <div class="repl-input-container">
+                            <span class="repl-prompt">ghci&gt; </span>
+                            <input type="text" class="repl-input" id="repl-input"
+                                placeholder="Введите Haskell выражение...">
+                            <button class="repl-submit" id="repl-submit">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="repl-controls">
+                            <button class="repl-btn clear-btn" id="repl-clear">
+                                <i class="fas fa-trash"></i> Очистить
+                            </button>
+                            <button class="repl-btn help-btn" id="repl-help">
+                                <i class="fas fa-question"></i> Помощь
+                            </button>
+                        </div>
+                    </div>
+                </section>
             </div>
 
             <div class="content-footer">
@@ -174,6 +210,10 @@
         </main>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-haskell.min.js"></script>
     <script src="script.js"></script>
 </body>
 

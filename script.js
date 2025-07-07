@@ -27,7 +27,7 @@ const chapters = {
             </ul>
             <h2>Установка</h2>
             <p>Для начала работы с Haskell нужно установить GHC (Glasgow Haskell Compiler) и GHCi (интерактивную оболочку).</p>
-            <pre><code>-- Простейшая программа на Haskell
+            <pre><code class="language-haskell">-- Простейшая программа на Haskell
 main :: IO ()
 main = putStrLn "Hello, World!"</code></pre>
         `
@@ -42,7 +42,7 @@ main = putStrLn "Hello, World!"</code></pre>
                 <li>Tuple: (Int, String)</li>
             </ul>
             <h2>Основные типы</h2>
-            <pre><code>-- Числа
+            <pre><code class="language-haskell">-- Числа
 age :: Int
 age = 25
 
@@ -60,7 +60,7 @@ initial = 'D'
 name :: String
 name = "Denis"</code></pre>
             <h2>Списки</h2>
-            <pre><code>-- Список чисел
+            <pre><code class="language-haskell">-- Список чисел
 numbers :: [Int]
 numbers = [1, 2, 3, 4, 5]
 
@@ -80,7 +80,7 @@ restNumbers = tail numbers  -- [2, 3, 4, 5]</code></pre>
                 <li>Частичное применение, каррирование</li>
             </ul>
             <h2>Объявление функций</h2>
-            <pre><code>-- Простая функция
+            <pre><code class="language-haskell">-- Простая функция
 double :: Int -> Int
 double x = x * 2
 
@@ -88,7 +88,7 @@ double x = x * 2
 add :: Int -> Int -> Int
 add x y = x + y</code></pre>
             <h2>Рекурсия</h2>
-            <pre><code>-- Факториал
+            <pre><code class="language-haskell">-- Факториал
 factorial :: Int -> Int
 factorial 0 = 1
 factorial n = n * factorial (n - 1)</code></pre>
@@ -99,13 +99,13 @@ factorial n = n * factorial (n - 1)</code></pre>
         content: `
             <h1>4. Сопоставление с паттернами и guard-выражения</h1>
             <h2>Паттерн-матчинг</h2>
-            <pre><code>-- Сопоставление с паттернами
+            <pre><code class="language-haskell">-- Сопоставление с паттернами
 describe :: Int -> String
 describe 0 = "Zero"
 describe 1 = "One"
 describe n = "Other number"</code></pre>
             <h2>Guard-выражения</h2>
-            <pre><code>-- Guard-выражения
+            <pre><code class="language-haskell">-- Guard-выражения
 grade :: Int -> String
 grade score
     | score >= 90 = "A"
@@ -119,7 +119,7 @@ grade score
         content: `
             <h1>5. Модули и импорт</h1>
             <h2>Импорт модулей</h2>
-            <pre><code>-- Импорт всего модуля
+            <pre><code class="language-haskell">-- Импорт всего модуля
 import Data.List
 
 -- Импорт конкретных функций
@@ -128,7 +128,7 @@ import Data.List (sort, reverse)
 -- Импорт с алиасом
 import qualified Data.Map as Map</code></pre>
             <h2>Создание модулей</h2>
-            <pre><code>-- MyModule.hs
+            <pre><code class="language-haskell">-- MyModule.hs
 module MyModule (myFunction, MyType) where
 
 myFunction :: Int -> Int
@@ -145,7 +145,7 @@ myFunction x = x * 2</code></pre>
             </ul>
             <h2>Неизменяемые значения</h2>
             <p>В Haskell все значения неизменяемы по умолчанию. Это означает, что после создания значения его нельзя изменить.</p>
-            <pre><code>-- Значения неизменяемы
+            <pre><code class="language-haskell">-- Значения неизменяемы
 x = 42
 -- x = 43  -- Ошибка компиляции!
 
@@ -165,7 +165,7 @@ moreNumbers = 0 : numbers  -- [0, 1, 2, 3]
                 <li>Композиция функций ((.)</li>
             </ul>
             <h2>Основные функции</h2>
-            <pre><code>-- map применяет функцию к каждому элементу списка
+            <pre><code class="language-haskell">-- map применяет функцию к каждому элементу списка
 doubled = map (*2) [1, 2, 3, 4]  -- [2, 4, 6, 8]
 
 -- filter отбирает элементы по условию
@@ -174,7 +174,7 @@ evens = filter even [1, 2, 3, 4, 5, 6]  -- [2, 4, 6]
 -- fold сворачивает список в одно значение
 sum' = foldl (+) 0 [1, 2, 3, 4]  -- 10</code></pre>
             <h2>Анонимные функции</h2>
-            <pre><code>-- Lambda-функции
+            <pre><code class="language-haskell">-- Lambda-функции
 increment = map (\\x -> x + 1) [1, 2, 3]  -- [2, 3, 4]</code></pre>
         `
     },
@@ -188,7 +188,7 @@ increment = map (\\x -> x + 1) [1, 2, 3]  -- [2, 3, 4]</code></pre>
                 <li>Аналогия с sealed class в Kotlin</li>
             </ul>
             <h2>Создание новых типов</h2>
-            <pre><code>-- Простой тип данных
+            <pre><code class="language-haskell">-- Простой тип данных
 data Color = Red | Green | Blue
 
 -- Тип с параметрами
@@ -197,7 +197,7 @@ data Point = Point Double Double
 -- Тип с несколькими конструкторами
 data Shape = Circle Double | Rectangle Double Double</code></pre>
             <h2>Maybe и Either</h2>
-            <pre><code>-- Maybe для опциональных значений
+            <pre><code class="language-haskell">-- Maybe для опциональных значений
 data Maybe a = Nothing | Just a
 
 -- Either для результатов с ошибками
@@ -435,6 +435,14 @@ function loadChapter(chapterId) {
 
     // Scroll to top
     window.scrollTo(0, 0);
+
+    // Re-highlight syntax with Prism.js
+    if (typeof Prism !== 'undefined') {
+        Prism.highlightAll();
+    }
+
+    // Add "Try" buttons to code examples
+    addTryButtons();
 }
 
 // Update action buttons
@@ -579,4 +587,360 @@ window.addEventListener('resize', () => {
     if (window.innerWidth > 768) {
         sidebar.classList.remove('open');
     }
+});
+
+// Interactive REPL functionality
+class HaskellREPL {
+    constructor() {
+        this.history = [];
+        this.initializeREPL();
+    }
+
+    initializeREPL() {
+        const replToggle = document.getElementById('repl-toggle');
+        const replContainer = document.getElementById('repl-container');
+        const replInput = document.getElementById('repl-input');
+        const replSubmit = document.getElementById('repl-submit');
+        const replClear = document.getElementById('repl-clear');
+        const replHelp = document.getElementById('repl-help');
+
+        // Toggle REPL visibility
+        replToggle.addEventListener('click', () => {
+            replContainer.classList.toggle('active');
+            const isActive = replContainer.classList.contains('active');
+            replToggle.innerHTML = isActive
+                ? '<i class="fas fa-times"></i> Закрыть REPL'
+                : '<i class="fas fa-code"></i> Попробовать код';
+        });
+
+        // Submit expression
+        const submitExpression = () => {
+            const expression = replInput.value.trim();
+            if (expression) {
+                this.evaluateExpression(expression);
+                replInput.value = '';
+            }
+        };
+
+        replSubmit.addEventListener('click', submitExpression);
+        replInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                submitExpression();
+            }
+        });
+
+        // Clear output
+        replClear.addEventListener('click', () => {
+            const replOutput = document.getElementById('repl-output');
+            replOutput.innerHTML = `
+                <div class="repl-welcome">
+                    <p>🎉 Добро пожаловать в интерактивный Haskell REPL!</p>
+                    <p>Попробуйте ввести: <code>2 + 3</code> или <code>map (*2) [1,2,3]</code></p>
+                </div>
+            `;
+            this.history = [];
+        });
+
+        // Show help
+        replHelp.addEventListener('click', () => {
+            this.showHelp();
+        });
+    }
+
+    evaluateExpression(expr) {
+        const replOutput = document.getElementById('repl-output');
+
+        // Add command to output
+        const commandDiv = document.createElement('div');
+        commandDiv.className = 'repl-entry';
+        commandDiv.innerHTML = `
+            <div class="repl-command">
+                <span class="repl-prompt">ghci&gt;</span>
+                <span>${this.escapeHtml(expr)}</span>
+            </div>
+        `;
+        replOutput.appendChild(commandDiv);
+
+        try {
+            const result = this.evaluate(expr);
+            const resultDiv = document.createElement('div');
+            resultDiv.className = 'repl-result';
+            resultDiv.textContent = result;
+            replOutput.appendChild(resultDiv);
+        } catch (error) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'repl-error';
+            errorDiv.textContent = `Error: ${error.message}`;
+            replOutput.appendChild(errorDiv);
+        }
+
+        // Auto-scroll to bottom
+        replOutput.scrollTop = replOutput.scrollHeight;
+        this.history.push(expr);
+    }
+
+    evaluate(expr) {
+        // Simple Haskell expression evaluator
+        expr = expr.trim();
+
+        // Handle basic arithmetic
+        if (/^\d+\s*[\+\-\*\/]\s*\d+$/.test(expr)) {
+            return eval(expr).toString();
+        }
+
+        // Handle lists
+        if (expr.match(/^\[[\d,\s]*\]$/)) {
+            return expr;
+        }
+
+        // Handle simple function applications
+        if (expr.includes('map')) {
+            return this.evaluateMap(expr);
+        }
+
+        if (expr.includes('filter')) {
+            return this.evaluateFilter(expr);
+        }
+
+        if (expr.includes('length')) {
+            return this.evaluateLength(expr);
+        }
+
+        if (expr.includes('head')) {
+            return this.evaluateHead(expr);
+        }
+
+        if (expr.includes('tail')) {
+            return this.evaluateTail(expr);
+        }
+
+        // Handle basic values
+        if (/^\d+$/.test(expr)) {
+            return expr;
+        }
+
+        if (expr === 'True' || expr === 'False') {
+            return expr;
+        }
+
+        if (expr.startsWith('"') && expr.endsWith('"')) {
+            return expr;
+        }
+
+        // Handle simple expressions
+        if (expr.includes('++')) {
+            return this.evaluateConcat(expr);
+        }
+
+        // Default case
+        throw new Error('Expression not supported in this simple REPL');
+    }
+
+    evaluateMap(expr) {
+        // Simple map implementation: map (*2) [1,2,3]
+        const mapMatch = expr.match(/map\s*\(\*(\d+)\)\s*(\[[\d,\s]*\])/);
+        if (mapMatch) {
+            const multiplier = parseInt(mapMatch[1]);
+            const list = JSON.parse(mapMatch[2].replace(/\s/g, ''));
+            const result = list.map(x => x * multiplier);
+            return `[${result.join(',')}]`;
+        }
+
+        const mapAdd = expr.match(/map\s*\(\+(\d+)\)\s*(\[[\d,\s]*\])/);
+        if (mapAdd) {
+            const addend = parseInt(mapAdd[1]);
+            const list = JSON.parse(mapAdd[2].replace(/\s/g, ''));
+            const result = list.map(x => x + addend);
+            return `[${result.join(',')}]`;
+        }
+
+        return 'map: function not fully implemented';
+    }
+
+    evaluateFilter(expr) {
+        // Simple filter implementation: filter even [1,2,3,4]
+        const evenMatch = expr.match(/filter\s+even\s*(\[[\d,\s]*\])/);
+        if (evenMatch) {
+            const list = JSON.parse(evenMatch[1].replace(/\s/g, ''));
+            const result = list.filter(x => x % 2 === 0);
+            return `[${result.join(',')}]`;
+        }
+
+        const oddMatch = expr.match(/filter\s+odd\s*(\[[\d,\s]*\])/);
+        if (oddMatch) {
+            const list = JSON.parse(oddMatch[1].replace(/\s/g, ''));
+            const result = list.filter(x => x % 2 === 1);
+            return `[${result.join(',')}]`;
+        }
+
+        return 'filter: function not fully implemented';
+    }
+
+    evaluateLength(expr) {
+        const lengthMatch = expr.match(/length\s*(\[[\d,\s]*\])/);
+        if (lengthMatch) {
+            const list = JSON.parse(lengthMatch[1].replace(/\s/g, ''));
+            return list.length.toString();
+        }
+        return 'length: invalid list';
+    }
+
+    evaluateHead(expr) {
+        const headMatch = expr.match(/head\s*(\[[\d,\s]*\])/);
+        if (headMatch) {
+            const list = JSON.parse(headMatch[1].replace(/\s/g, ''));
+            if (list.length === 0) throw new Error('empty list');
+            return list[0].toString();
+        }
+        return 'head: invalid list';
+    }
+
+    evaluateTail(expr) {
+        const tailMatch = expr.match(/tail\s*(\[[\d,\s]*\])/);
+        if (tailMatch) {
+            const list = JSON.parse(tailMatch[1].replace(/\s/g, ''));
+            if (list.length === 0) throw new Error('empty list');
+            const result = list.slice(1);
+            return `[${result.join(',')}]`;
+        }
+        return 'tail: invalid list';
+    }
+
+    evaluateConcat(expr) {
+        const concatMatch = expr.match(/(\[[\d,\s]*\])\s*\+\+\s*(\[[\d,\s]*\])/);
+        if (concatMatch) {
+            const list1 = JSON.parse(concatMatch[1].replace(/\s/g, ''));
+            const list2 = JSON.parse(concatMatch[2].replace(/\s/g, ''));
+            const result = list1.concat(list2);
+            return `[${result.join(',')}]`;
+        }
+        return '++: invalid lists';
+    }
+
+    showHelp() {
+        const replOutput = document.getElementById('repl-output');
+        const helpDiv = document.createElement('div');
+        helpDiv.className = 'repl-entry';
+        helpDiv.innerHTML = `
+            <div class="repl-welcome">
+                <p><strong>📚 Доступные команды:</strong></p>
+                <p><code>2 + 3</code> - Арифметические операции</p>
+                <p><code>[1,2,3]</code> - Списки</p>
+                <p><code>map (*2) [1,2,3]</code> - Применение функции к списку</p>
+                <p><code>filter even [1,2,3,4]</code> - Фильтрация списка</p>
+                <p><code>length [1,2,3]</code> - Длина списка</p>
+                <p><code>head [1,2,3]</code> - Первый элемент</p>
+                <p><code>tail [1,2,3]</code> - Все элементы кроме первого</p>
+                <p><code>[1,2] ++ [3,4]</code> - Конкатенация списков</p>
+            </div>
+        `;
+        replOutput.appendChild(helpDiv);
+        replOutput.scrollTop = replOutput.scrollHeight;
+    }
+
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+}
+
+// Add interactive "Try" buttons to code examples
+function addTryButtons() {
+    const codeBlocks = document.querySelectorAll('pre code.language-haskell');
+
+    codeBlocks.forEach((codeBlock, index) => {
+        const pre = codeBlock.parentElement;
+
+        // Skip if button already exists
+        if (pre.querySelector('.try-code-btn')) return;
+
+        const code = codeBlock.textContent.trim();
+
+        // Only add button for simple, executable expressions
+        const isExecutable = isExecutableCode(code);
+
+        if (isExecutable) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'code-example-wrapper';
+
+            pre.parentNode.insertBefore(wrapper, pre);
+            wrapper.appendChild(pre);
+
+            const tryButton = document.createElement('button');
+            tryButton.className = 'try-code-btn';
+            tryButton.innerHTML = '<i class="fas fa-play"></i> Попробовать';
+            tryButton.onclick = () => tryCode(getExecutableExpression(code));
+
+            wrapper.appendChild(tryButton);
+        }
+    });
+}
+
+function isExecutableCode(code) {
+    // Remove comments and extra whitespace
+    const cleanCode = code.replace(/--.*$/gm, '').trim();
+
+    // Check for simple expressions that can be executed
+    const executablePatterns = [
+        /^\d+\s*[\+\-\*\/]\s*\d+/,  // Arithmetic
+        /^map\s*\(/,                 // map functions
+        /^filter\s+/,                // filter functions
+        /^length\s+/,                // length function
+        /^head\s+/,                  // head function
+        /^tail\s+/,                  // tail function
+        /^\[[\d,\s]*\]\s*\+\+/,     // list concatenation
+        /^\[[\d,\s]*\]$/,           // simple lists
+        /^\d+$/,                     // numbers
+        /^True|False$/               // booleans
+    ];
+
+    return executablePatterns.some(pattern => pattern.test(cleanCode));
+}
+
+function getExecutableExpression(code) {
+    // Extract the first executable line from code
+    const lines = code.split('\n');
+
+    for (const line of lines) {
+        const cleanLine = line.replace(/--.*$/, '').trim();
+        if (cleanLine && !cleanLine.startsWith('--') && isExecutableCode(cleanLine)) {
+            return cleanLine;
+        }
+    }
+
+    return code.trim();
+}
+
+function tryCode(expression) {
+    // Open REPL if not already open
+    const replContainer = document.getElementById('repl-container');
+    const replToggle = document.getElementById('repl-toggle');
+
+    if (!replContainer.classList.contains('active')) {
+        replContainer.classList.add('active');
+        replToggle.innerHTML = '<i class="fas fa-times"></i> Закрыть REPL';
+    }
+
+    // Fill input and focus
+    const replInput = document.getElementById('repl-input');
+    replInput.value = expression;
+    replInput.focus();
+
+    // Scroll to REPL
+    document.getElementById('repl-section').scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest'
+    });
+
+    // Highlight the input briefly
+    replInput.style.background = 'rgba(59, 130, 246, 0.2)';
+    setTimeout(() => {
+        replInput.style.background = 'transparent';
+    }, 1000);
+}
+
+// Initialize REPL when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    new HaskellREPL();
 }); 
